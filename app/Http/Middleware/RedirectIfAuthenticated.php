@@ -1,0 +1,50 @@
+<?php
+
+// namespace App\Http\Middleware;
+
+// use App\Providers\RouteServiceProvider;
+// use Closure;
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Auth;
+// use Symfony\Component\HttpFoundation\Response;
+
+// class RedirectIfAuthenticated
+// {
+//     /**
+//      * Handle an incoming request.
+//      *
+//      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+//      */
+//     public function handle(Request $request, Closure $next, string ...$guards): Response
+//     {
+//         $guards = empty($guards) ? [null] : $guards;
+
+//         foreach ($guards as $guard) {
+//             if (Auth::guard($guard)->check()) {
+//                 return redirect(RouteServiceProvider::HOME);
+//             }
+//         }
+
+//         return $next($request);
+//     }
+// }
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Support\Facades\Auth;
+
+class RedirectIfAuthenticated
+{
+    public function handle($request, Closure $next, ...$guards)
+    {
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                // Ganti dengan route atau URL yang benar untuk user dan admin
+                return redirect('/home'); // Redirect ke halaman home atau sesuai peran
+            }
+        }
+
+        return $next($request);
+    }
+}
+
