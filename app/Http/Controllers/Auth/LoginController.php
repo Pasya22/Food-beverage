@@ -11,7 +11,9 @@ class LoginController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest')->except(['logout','home']);
+        if (!Auth::check()) {
+           redirect('/home');
+        }
     }
 
     public function showLoginForm()

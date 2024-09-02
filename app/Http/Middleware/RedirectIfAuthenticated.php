@@ -31,6 +31,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Providers\RouteServiceProvider;
+
 use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
@@ -39,9 +41,8 @@ class RedirectIfAuthenticated
     {
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                // Ganti dengan route atau URL yang benar untuk user dan admin
-                return redirect('/home'); // Redirect ke halaman home atau sesuai peran
-            }
+                return redirect(RouteServiceProvider::HOME);
+              }
         }
 
         return $next($request);
